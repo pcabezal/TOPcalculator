@@ -3,17 +3,16 @@
 // 	return a + b;
 // };
 
-const subtractttt = function(a, b) {
-	return a - b;
-};
+// const subtractttt = function(a, b) {
+// 	return a - b;
+// };
+// const divide = function(a, b) {
+// 	return a / b;
+// };
 
-const divide = function(a, b) {
-	return a / b;
-};
-
-const multiply = function(a, b) {
-  return a * b;
-};
+// const multiply = function(a, b) {
+//   return a * b;
+// };
 
 // const power = function(a, b) {
 //     return a ** b;	
@@ -53,50 +52,68 @@ window.addEventListener('keydown', pressKey);
 let varA = [];
 let varABig;
 let varB = [];
-let varBBig = 4
+let varBBig;
 let operand;
- 
-const adddd = (a,b) => a + b;
+let inputStatus = 'takeA';
  
 const calculate = function(a, b, operation) {
-  // console.log(operation);
-  // console.log(typeof operation);
   return operation(a, b);
 }
 
 const myFunctions = {
   add: (a,b) => a + b,
   subtract: (a, b) => a - b,
-    
-  };
-  
+  divide: (a,b) => a / b,
+  multiply: (a,b) => a * b,
+};
 
-
-  // const myFunctions = {
-  //   add: add(),
-  //   subtract: subtract()
-  //   };
-    
-  //   operand = myFunctions[key.id]
-
-// console.log(operation);
-// console.log(typeof operation);
-// console.log(calculate(2, 7, add));
+const clearVars = function() {
+  varA = [];
+  varB = [];
+  varBBig = undefined;
+}
 
 buttons.forEach(key => key.addEventListener('click', event => {
    event.target.classList.add('clicked');
    if (!isNaN(Number(key.id))) {
-     inPut(key.id);
+      inPut(key.id);
    } else if (key.id === "clear") {
-    clearAll();
-   }
-   else if (key.id !== 'equals') {
-    operand = myFunctions[key.id];
+      clearAll();
+   } else if (key.id !== 'equals') {  
+      inputStatus = 'takeB';
+      if (varABig && varBBig && operand) {
+        varABig = calculate(varABig, varBBig, operand);
+        updateDisplay(varABig);
+        clearVars();
+      }
+      operand = myFunctions[key.id];
+
+      // clearVars();
    } else if (key.id === 'equals') {
-       console.log("results = " + calculate(varABig, varBBig, operand));
-      updateDisplay(calculate(varABig, varBBig, operand));
+      if (varABig && varBBig && operand) {
+        console.log("varABig = " + varABig + ", varBBig = " + varBBig + ", operand = " + operand);
+        console.log("results = " + calculate(varABig, varBBig, operand));
+
+        varABig = calculate(varABig, varBBig, operand);
+        updateDisplay(varABig);
+        clearVars();
+        // updateDisplay(calculate(varABig, varBBig, operand));
+      }
    }
   }));
+
+const inPut = function(x) {
+  if (inputStatus == "takeA") {
+    varA.push(Number(x));
+    varABig = Number(varA.join(''));
+    updateDisplay(varABig);
+  } else if (inputStatus =="takeB") {
+    varB.push(Number(x));
+    varBBig = Number(varB.join(''));
+    updateDisplay(varBBig);
+  }
+
+}
 
 
 // input iffy version
@@ -110,36 +127,22 @@ buttons.forEach(key => key.addEventListener('click', event => {
 //     }
 // }
 
-const inPut = function(x) {
 
-     varA.push(Number(x));
-     varABig = Number(varA.join(''));
-     updateDisplay(varABig);
-
-}
 
 const clearAll = function(){
   console.log('clear');
   varA = [];
-  varABig = [];
+  varABig = undefined;
   varB = [];
-  varBBig = [];
-  updateDisplay(varABig);
+  varBBig = undefined;
+  operand = undefined;
+  inputStatus = "takeA";
+  updateDisplay('0');
 }
   
 
 // Operations
-
-let displayNum;
-let displayNumConc;
 let result;
-
-
-
-
-// const operate = function(operator,a,b) {
-//     return [operator](a,b);
-// }
 
 const updateDisplay = function(x) {
   document.getElementById("display").innerHTML = x;
@@ -147,12 +150,7 @@ const updateDisplay = function(x) {
 
 // 
 
-
 // console.log(calculate(3,5,subtract))
-
 // calculate(varA, varB, operand);
-
-
-
 // console.log(buttons)
   
