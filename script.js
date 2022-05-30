@@ -3,7 +3,7 @@
 // 	return a + b;
 // };
 
-const subtract = function(a, b) {
+const subtractttt = function(a, b) {
 	return a - b;
 };
 
@@ -50,21 +50,34 @@ function pressKey(e) {
 // Key Press Listener
 window.addEventListener('keydown', pressKey);
 
-let varA;
-let varB;
+let varA = [];
+let varABig;
+let varB = [];
+let varBBig = 4
 let operand;
-let fnstring;
-let fnparams = [1,2,3];
-let fn = window[fnstring];
-if (typeof fn === "function") fn.apply(null, fnparams);
  
-const add = (a,b) => a + b;
+const adddd = (a,b) => a + b;
  
 const calculate = function(a, b, operation) {
-  console.log(operation);
-  console.log(typeof operation);
+  // console.log(operation);
+  // console.log(typeof operation);
   return operation(a, b);
 }
+
+const myFunctions = {
+  add: (a,b) => a + b,
+  subtract: (a, b) => a - b,
+    
+  };
+  
+
+
+  // const myFunctions = {
+  //   add: add(),
+  //   subtract: subtract()
+  //   };
+    
+  //   operand = myFunctions[key.id]
 
 // console.log(operation);
 // console.log(typeof operation);
@@ -74,23 +87,44 @@ buttons.forEach(key => key.addEventListener('click', event => {
    event.target.classList.add('clicked');
    if (!isNaN(Number(key.id))) {
      inPut(key.id);
-   } else if (key.id !== 'equals') {
-     operand = key.id;
+   } else if (key.id === "clear") {
+    clearAll();
+   }
+   else if (key.id !== 'equals') {
+    operand = myFunctions[key.id];
    } else if (key.id === 'equals') {
-    //  console.log('im trying i swear ' + varA + operand + varB)
-     console.log(calculate(varA, varB, operand));
-    //  console.log('im trying i swear2 ' + varA + operand + varB)
+       console.log("results = " + calculate(varABig, varBBig, operand));
+      updateDisplay(calculate(varABig, varBBig, operand));
    }
   }));
 
+
+// input iffy version
+// const inPut = function(x) {
+//     if (!varA) {
+//        varA = Number(x);
+//        updateDisplay(varA);
+//     } else if (!varB) {
+//        varB = Number(x);
+//        updateDisplay(varB);
+//     }
+// }
+
 const inPut = function(x) {
-    if (!varA) {
-       varA = Number(x);
-       updateDisplay(varA);
-    } else if (!varB) {
-       varB = Number(x);
-       updateDisplay(varB);
-    }
+
+     varA.push(Number(x));
+     varABig = Number(varA.join(''));
+     updateDisplay(varABig);
+
+}
+
+const clearAll = function(){
+  console.log('clear');
+  varA = [];
+  varABig = [];
+  varB = [];
+  varBBig = [];
+  updateDisplay(varABig);
 }
   
 
