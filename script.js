@@ -1,19 +1,3 @@
-//Math Functions
-// const add = function(a, b) {
-// 	return a + b;
-// };
-
-// const subtractttt = function(a, b) {
-// 	return a - b;
-// };
-// const divide = function(a, b) {
-// 	return a / b;
-// };
-
-// const multiply = function(a, b) {
-//   return a * b;
-// };
-
 // const power = function(a, b) {
 //     return a ** b;	
 //   };
@@ -37,20 +21,26 @@ function removeTransition(e) {
 const buttons = Array.from(document.querySelectorAll('.button'));
 buttons.forEach(button => button.addEventListener('transitionend', removeTransition));
 
-// Mouse Click Listener
-function pressKey(e) {
-  const key=document.querySelector(`div[data-key="${e.keyCode}"]`);
-  if (key) {key.classList.add('clicked');
-    inPut(key.id);}
-}
-
-
-
 // Key Press Listener
 window.addEventListener('keydown', pressKey);
 
-let varA = [];
-let varABig;
+function pressKey(e) {
+  const key=document.querySelector(`div[data-key="${e.keyCode}"]`);
+  if (key) {key.classList.add('clicked');
+    mathinsides(key);
+  }
+}
+
+//Mouse click Listener
+buttons.forEach(key => key.addEventListener('click', event => {
+  event.target.classList.add('clicked');
+  mathinsides(key);
+}));
+
+
+//Calculator and Math functions
+let varA = [0];
+let varABig = 0;
 let varB = [];
 let varBBig;
 let operand;
@@ -63,44 +53,62 @@ const calculate = function(a, b, operation) {
 const myFunctions = {
   add: (a,b) => a + b,
   subtract: (a, b) => a - b,
-  divide: (a,b) => a / b,
+  divide: function(a,b) { 
+    if (b==0) {
+      clearAll();
+      // updateDisplay("don't be dum");
+      alert("don't be dum");
+      return 0;
+    } else {
+    return a / b; }
+    },
   multiply: (a,b) => a * b,
 };
 
-const clearVars = function() {
+const clearVars = function() {  // sets up to perform next operation
+  varABig = calculate(varABig, varBBig, operand);
+  updateDisplay(varABig);
   varA = [];
   varB = [];
   varBBig = undefined;
 }
 
-buttons.forEach(key => key.addEventListener('click', event => {
-   event.target.classList.add('clicked');
-   if (!isNaN(Number(key.id))) {
-      inPut(key.id);
-   } else if (key.id === "clear") {
-      clearAll();
-   } else if (key.id !== 'equals') {  
-      inputStatus = 'takeB';
-      if (varABig && varBBig && operand) {
-        varABig = calculate(varABig, varBBig, operand);
-        updateDisplay(varABig);
-        clearVars();
-      }
-      operand = myFunctions[key.id];
+const clearAll = function(){  
+  console.log('clear');
+  varA = [];
+  varABig = undefined;
+  varB = [];
+  varBBig = undefined;
+  operand = undefined;
+  inputStatus = "takeA";
+  updateDisplay('0');
+}
 
-      // clearVars();
-   } else if (key.id === 'equals') {
-      if (varABig && varBBig && operand) {
-        console.log("varABig = " + varABig + ", varBBig = " + varBBig + ", operand = " + operand);
-        console.log("results = " + calculate(varABig, varBBig, operand));
+const mathinsides = function(key) {
+  if (!isNaN(Number(key.id))) {
+    if (varA == []) inputStatus = "takeA"; // resets input if equal has already been pressed
+    inPut(key.id);
+  } else if (key.id === "clear") {
+    clearAll();
+  } else if (key.id !== 'equals') {  
+    inputStatus = 'takeB';
+    if (typeof varABig === "number" && typeof varBBig === "number" && operand) {
+      clearVars();
+    } else if (!varABig) {
+      varABig = 0;
+    }
+    operand = myFunctions[key.id];
+  } else if (key.id === 'equals') {
+    if (typeof varABig === "number" && typeof varBBig === "number" && operand) {
+      clearVars();
+      operand = undefined;
+      inputStatus = "takeA";
+    }
+  }
+}
 
-        varABig = calculate(varABig, varBBig, operand);
-        updateDisplay(varABig);
-        clearVars();
-        // updateDisplay(calculate(varABig, varBBig, operand));
-      }
-   }
-  }));
+
+
 
 const inPut = function(x) {
   if (inputStatus == "takeA") {
@@ -116,41 +124,12 @@ const inPut = function(x) {
 }
 
 
-// input iffy version
-// const inPut = function(x) {
-//     if (!varA) {
-//        varA = Number(x);
-//        updateDisplay(varA);
-//     } else if (!varB) {
-//        varB = Number(x);
-//        updateDisplay(varB);
-//     }
-// }
 
-
-
-const clearAll = function(){
-  console.log('clear');
-  varA = [];
-  varABig = undefined;
-  varB = [];
-  varBBig = undefined;
-  operand = undefined;
-  inputStatus = "takeA";
-  updateDisplay('0');
-}
   
 
 // Operations
-let result;
 
 const updateDisplay = function(x) {
   document.getElementById("display").innerHTML = x;
 }
 
-// 
-
-// console.log(calculate(3,5,subtract))
-// calculate(varA, varB, operand);
-// console.log(buttons)
-  
