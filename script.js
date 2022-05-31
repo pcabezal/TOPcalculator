@@ -13,6 +13,8 @@
 
 
 // Button animations
+mainBoy = document.querySelector(`div[class=mainCalculator]`)
+
 function removeTransition(e) {
   if (e.propertyName !== 'transform') return;
   e.target.classList.remove('clicked');
@@ -21,12 +23,15 @@ function removeTransition(e) {
 const buttons = Array.from(document.querySelectorAll('.button'));
 buttons.forEach(button => button.addEventListener('transitionend', removeTransition));
 
+mainBoy.addEventListener('transitionend', removeTransition);
+
 // Key Press Listener
 window.addEventListener('keydown', pressKey);
 
 function pressKey(e) {
   const key=document.querySelector(`div[data-key="${e.keyCode}"]`);
-  if (key) {key.classList.add('clicked');
+  console.log(key);
+  if (key) {key.classList.add('clicked');  // prevents errors on random key presses
     mathinsides(key);
   }
 }
@@ -50,14 +55,20 @@ const calculate = function(a, b, operation) {
   return operation(a, b);
 }
 
+
+
+// come back and clean up divide by 0 sass!!
 const myFunctions = {
   add: (a,b) => a + b,
   subtract: (a, b) => a - b,
   divide: function(a,b) { 
     if (b==0) {
+      mainBoy.classList.add('hellnaw');
       clearAll();
       // updateDisplay("don't be dum");
-      alert("don't be dum");
+
+      alert("every time you divide by 0 an angel loses its wings");
+
       return 0;
     } else {
     return a / b; }
@@ -65,7 +76,7 @@ const myFunctions = {
   multiply: (a,b) => a * b,
 };
 
-const clearVars = function() {  // sets up to perform next operation
+const clearVars = function() {  // Sets up to perform next operation
   varABig = calculate(varABig, varBBig, operand);
   updateDisplay(varABig);
   varA = [];
@@ -73,8 +84,7 @@ const clearVars = function() {  // sets up to perform next operation
   varBBig = undefined;
 }
 
-const clearAll = function(){  
-  console.log('clear');
+const clearAll = function(){  // Clears everything
   varA = [];
   varABig = undefined;
   varB = [];
@@ -89,14 +99,15 @@ const mathinsides = function(key) {
     if (varA == []) inputStatus = "takeA"; // resets input if equal has already been pressed
     inPut(key.id);
   } else if (key.id === "clear") {
-    clearAll();
-  } else if (key.id !== 'equals') {  
+    clearAll(); 
+  } 
+  else if (key.id !== 'equals') {  
     inputStatus = 'takeB';
     if (typeof varABig === "number" && typeof varBBig === "number" && operand) {
       clearVars();
-    } else if (!varABig) {
+  } else if (!varABig) {
       varABig = 0;
-    }
+  }
     operand = myFunctions[key.id];
   } else if (key.id === 'equals') {
     if (typeof varABig === "number" && typeof varBBig === "number" && operand) {
