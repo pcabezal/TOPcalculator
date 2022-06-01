@@ -12,9 +12,7 @@
 // };
 
 
-// Button animations
-mainBoy = document.querySelector(`div[class=mainCalculator]`)
-
+// Animations
 function removeTransition(e) {
   if (e.propertyName !== 'transform') return;
   e.target.classList.remove('clicked');
@@ -23,7 +21,7 @@ function removeTransition(e) {
 const buttons = Array.from(document.querySelectorAll('.button'));
 buttons.forEach(button => button.addEventListener('transitionend', removeTransition));
 
-mainBoy.addEventListener('transitionend', removeTransition);
+mainBoy = document.querySelector(`div[class=mainCalculator]`)
 
 // Key Press Listener
 window.addEventListener('keydown', pressKey);
@@ -57,18 +55,21 @@ const calculate = function(a, b, operation) {
 
 
 
+
+
+
 // come back and clean up divide by 0 sass!!
 const myFunctions = {
   add: (a,b) => a + b,
   subtract: (a, b) => a - b,
   divide: function(a,b) { 
     if (b==0) {
-      mainBoy.classList.add('hellnaw');
+      mainBoy.classList.add('hellnaw'); //testing calc flip
+      setTimeout(() => {
+        mainBoy.classList.remove('hellnaw');
+      }, 750);            
       clearAll();
-      // updateDisplay("don't be dum");
-
-      alert("every time you divide by 0 an angel loses its wings");
-
+      // alert("every time you divide by 0 an angel loses its wings");
       return 0;
     } else {
     return a / b; }

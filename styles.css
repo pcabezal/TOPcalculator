@@ -5,6 +5,10 @@ body {
     font-family: 'Courier New', Courier, monospace;
 }
 
+a {
+    text-decoration: none;
+}
+
 .banner {
     height: 30px;
     display: flex;
@@ -20,11 +24,11 @@ body {
     height: 650px;
     border: 5px solid hsla(239, 53%, 26%, 1);
     border-radius: 10px;
-    box-shadow: 0 0 1rem hsla(41, 53%, 74%, 1);
+    box-shadow: 0rem 0rem 1rem .2rem hsla(41, 53%, 74%, 1);
     margin: auto;
     background-color: hsl(0, 0%, 10%);
     margin-top: 30px;
-    transition: all .5s linear;
+    transition: all .75s ease;
 }
 
 #display {
@@ -34,6 +38,7 @@ body {
     padding-top: 5px;
     padding-bottom: 5px;
     margin: 10px;
+    margin-bottom: 20px;
     background-color: hsla(239, 53%, 26%);
 }
 
@@ -76,7 +81,14 @@ body {
     transform: rotate(360deg);
 }
 
-/* .button:active {
-    transform: translate3d(0, -2px, 0);
-    background-color: darkgrey;
-} */
+.footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    font-size: 20px;
+}
