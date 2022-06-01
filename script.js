@@ -134,9 +134,9 @@ const inPut = function(x) {
       typeNumConc = Number(typeNum.join(''));
       updateDisplay(typeNumConc);
       if (inputStatus == 'takeA') {
-        varA = typeNumConc
+        varA = typeNumConc;
       } else if (inputStatus == 'takeB') {
-        varB = typeNumConc
+        varB = typeNumConc;
       }
-    }
+  }
 }
