@@ -1,13 +1,9 @@
-html, body {
-    height: 100%;
-}
 
 body {
     background-color: darkgrey;
     color: white;
     font: 24px bold Courier;
     font-family: 'Courier New', Courier, monospace;
-
 }
 
 a {
@@ -93,17 +89,12 @@ a {
 }
 
 .footer {
-
+    position: absolute;
+    justify-content: center;
+    display: flex;
     bottom: 0;
     left: 0;
     right: 0;
     font-size: 20px;
     margin-top: 30px;
-
-    /* 
-
-    gap: 10px;
-    align-items: center;
-    width: 100%;
- */
 }
