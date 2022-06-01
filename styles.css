@@ -3,6 +3,7 @@ body {
     color: white;
     font: 24px bold Courier;
     font-family: 'Courier New', Courier, monospace;
+
 }
 
 a {
@@ -91,7 +92,7 @@ a {
     position: absolute;
     bottom: 0;
     left: 0;
-    display: flex;
+
     align-items: center;
     justify-content: center;
     gap: 10px;
